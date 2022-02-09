@@ -6,12 +6,13 @@ import static java.time.Clock.tick;
 
 public class Game extends Canvas implements Runnable {
 
-
+    final int PANEL_WIDTH = 500;
+    final int PANEL_HEIGHT = 500;
     private boolean isRunning = false;
     private Thread thread;
 
     public Game() {
-        new Window(1000, 1000, "Snake", this);
+        new Window(PANEL_WIDTH, PANEL_HEIGHT, "Snake", this);
         start();
     }
 
@@ -67,6 +68,16 @@ public class Game extends Canvas implements Runnable {
             this.createBufferStrategy(3);
             return;
         }
+
+        Graphics g = bs.getDrawGraphics();
+        //////////////////////////////////////////
+        g.setColor(Color.red);
+        g.fillRect(0,0,PANEL_WIDTH,PANEL_HEIGHT);
+        ////////////////////////////////////////
+        g.dispose();
+        bs.show();
+
+
     }
 
     private void tick() {
