@@ -1,7 +1,12 @@
+import Objects.Handler;
+import Objects.ID;
+import Objects.Point;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
 
-import static java.time.Clock.tick;
 
 
 public class Game extends Canvas implements Runnable {
@@ -10,10 +15,18 @@ public class Game extends Canvas implements Runnable {
     final int PANEL_HEIGHT = 500;
     private boolean isRunning = false;
     private Thread thread;
+    private Handler handler;
+
+
+    private final Image backGround = new ImageIcon("src/main/resources/GRASS.png").getImage();
+
 
     public Game() {
-        new Window(PANEL_WIDTH, PANEL_HEIGHT, "Snake", this);
+        new Window(PANEL_WIDTH, PANEL_HEIGHT, "Objects.Snake", this);
         start();
+        handler = new Handler();
+        handler.addObject(new Point(100,100, ID.Point));
+        handler.addObject(new Point(120,240, ID.Point));
     }
 
     private void start() {
@@ -62,6 +75,10 @@ public class Game extends Canvas implements Runnable {
         stop();
     }
 
+    private void tick() {
+        handler.tick();
+    }
+
     private void render() {
         BufferStrategy bs = this.getBufferStrategy();
         if(bs ==null){
@@ -71,16 +88,19 @@ public class Game extends Canvas implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
         //////////////////////////////////////////
-        g.setColor(Color.red);
-        g.fillRect(0,0,PANEL_WIDTH,PANEL_HEIGHT);
+
+
+       // g.drawLine(0,0,new Random().nextInt(PANEL_WIDTH), new Random().nextInt(PANEL_HEIGHT));
+
+
+        g.drawImage(backGround,0,0,null);
+        handler.render(g);
+
+
         ////////////////////////////////////////
         g.dispose();
         bs.show();
 
-
-    }
-
-    private void tick() {
 
     }
 
