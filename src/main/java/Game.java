@@ -1,5 +1,4 @@
-import Objects.Handler;
-import Objects.ID;
+import Objects.*;
 import Objects.Point;
 
 import javax.swing.*;
@@ -25,8 +24,9 @@ public class Game extends Canvas implements Runnable {
         new Window(PANEL_WIDTH, PANEL_HEIGHT, "Objects.Snake", this);
         start();
         handler = new Handler();
-        handler.addObject(new Point(100,100, ID.Point));
-        handler.addObject(new Point(120,240, ID.Point));
+        this.addKeyListener(new KeyInput(handler));
+
+        handler.addObject(new Snake(100,100,ID.Snake,handler));
     }
 
     private void start() {
